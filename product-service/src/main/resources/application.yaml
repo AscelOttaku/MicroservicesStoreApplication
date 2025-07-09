@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: ProductApplication
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ProductApplication
+    username: postgres
+    password: Kanybek12345
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    locations: classpath:db/migration
+    enabled: true
+    validate-on-migrate: false

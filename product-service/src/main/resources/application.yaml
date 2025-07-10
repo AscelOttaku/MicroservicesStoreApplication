@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ProductApplication
+    name: ProductService
 
   jpa:
     hibernate:
@@ -15,3 +15,11 @@ spring:
     locations: classpath:db/migration
     enabled: true
     validate-on-migrate: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 30

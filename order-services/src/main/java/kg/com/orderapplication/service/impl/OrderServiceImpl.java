@@ -6,7 +6,6 @@ import kg.com.orderapplication.dto.OrderDto;
 import kg.com.orderapplication.dto.OrderOperationResultDto;
 import kg.com.orderapplication.mapper.OrderMapper;
 import kg.com.orderapplication.model.Order;
-import kg.com.orderapplication.model.OrderLineItems;
 import kg.com.orderapplication.repository.OrderRepository;
 import kg.com.orderapplication.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +34,7 @@ public class OrderServiceImpl implements OrderService {
         order.getOrderLineItems().forEach(orderLineItem -> orderLineItem.setOrder(order));
 
         var inventoryResponses = restClient.patch()
-                .uri(uriBuilder -> uriBuilder
-                        .scheme("http")
-                        .host("localhost")
-                        .port(8082)
-                        .path("api/inventory/products/fetch/from-stock")
-                        .build())
+                .uri("http://inventoryservice/api/inventory/products/fetch/from-stock")
                 .body(orderDto.getOrderLineItems().stream()
                         .map(orderLineItemsDto -> InventoryItems.builder()
                                 .skuCode(orderLineItemsDto.getSkuCode())
@@ -66,12 +60,7 @@ public class OrderServiceImpl implements OrderService {
 
     private void sendOperationFailed(InventoryResponse inventoryResponse) {
         restClient.put()
-                .uri(uriBuilder -> uriBuilder
-                        .scheme("http")
-                        .host("localhost")
-                        .port(8082)
-                        .path("api/inventory/order/operation-result")
-                        .build())
+                .uri("http://inventoryservice/api/inventory/order/operation-result")
                 .body(OrderOperationResultDto.builder()
                         .message("Product with SKU code " + inventoryResponse.getSkuCode() + " is out of stock.")
                         .operationSucceeded(false)
@@ -82,12 +71,7 @@ public class OrderServiceImpl implements OrderService {
 
     private void sendOperationSucceeded(Order order) {
         restClient.put()
-                .uri(uriBuilder -> uriBuilder
-                        .scheme("http")
-                        .host("localhost")
-                        .port(8082)
-                        .path("api/inventory/order/operation-result")
-                        .build())
+                .uri("http://inventoryservice/api/inventory/order/operation-result")
                 .body(OrderOperationResultDto.builder()
                         .message("Order with ID " + order.getId() + " has been successfully placed.")
                         .operationSucceeded(true)

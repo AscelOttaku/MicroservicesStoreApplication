@@ -1,6 +1,8 @@
 package kg.com.inventoryapplication.service;
 
+import kg.com.inventoryapplication.dto.InventoryItems;
 import kg.com.inventoryapplication.dto.InventoryResponse;
+import kg.com.inventoryapplication.dto.OrderOperationResultDto;
 import kg.com.inventoryapplication.dto.PageHolder;
 
 import java.util.List;
@@ -12,5 +14,9 @@ public interface InventoryService {
 
     boolean isProductsExistsInStockBySkuCode(List<String> skuCodes);
 
-    PageHolder<InventoryResponse> findProductAmountBySkuCode(List<String> skuCodes, int page, int size);
+    PageHolder<InventoryItems> fetchFromStock(List<String> skuCodes, int page, int size);
+
+    List<InventoryResponse> fetchFromStock(List<InventoryItems> skuCodes);
+
+    void handleOperationResult(OrderOperationResultDto orderOperationResultDto);
 }

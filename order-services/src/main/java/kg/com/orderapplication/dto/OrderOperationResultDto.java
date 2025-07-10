@@ -7,8 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class InventoryResponse {
-    private String skuCode;
-    private int quantity;
-    private boolean isFetchedFromStock;
+public class OrderOperationResultDto {
+    private String message;
+    private boolean operationSucceeded;
 }

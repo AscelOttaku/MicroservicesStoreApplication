@@ -11,6 +11,16 @@ spring:
     password: Kanybek12345
     driver-class-name: org.postgresql.Driver
 
+  rabbitmq:
+    exchange:
+      name: inventory-exchange
+
+    queue:
+      name: inventory-queue
+
+    routing:
+      key: inventory-routing-key
+
   flyway:
     locations: classpath:db/migration
     enabled: true
